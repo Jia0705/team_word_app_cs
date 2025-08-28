@@ -1,4 +1,10 @@
 package com.team.wordsapp_casestudy.data.model
 
-class Word {
-}
+data class Word (
+    val id: Int? = null,
+    val title: String,
+    val meaning: String,
+    val synonyms: String,
+    val detail: String,
+    val completed: Boolean = false
+)
