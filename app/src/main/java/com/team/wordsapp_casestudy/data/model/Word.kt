@@ -5,6 +5,6 @@ data class Word (
     val title: String,
     val meaning: String,
     val synonyms: String,
-    val detail: String,
-    val completed: Boolean = false
+    val details: String,
+    val isCompleted: Boolean = false
 )
