@@ -35,7 +35,7 @@ class WordsRepo private constructor(){
                 title = "Title $it",
                 meaning = "Meaning $it",
                 synonyms = "Synonyms $it",
-                detail = "Detail $it"
+                details = "Detail $it"
             )
         }
     }
