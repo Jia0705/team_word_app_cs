@@ -2,20 +2,24 @@ package com.team.wordsapp_casestudy.ui.manage.edit
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.team.wordsapp_casestudy.R
+import com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordFragment
+import kotlin.getValue
 
-class EditWordFragment : Fragment() {
+class EditWordFragment : BaseManageWordFragment() {
 
-    private val viewModel: EditWordViewModel by viewModels()
+    override val viewModel: EditWordViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_edit_word, container, false)
+    private val args: EditWordFragmentArgs by navArgs()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        viewModel.getWord(args.wordId)
+        binding.tbTitle.setTitle("Update Word")
+        binding.mbSubmit.setText(R.string.update)
     }
 }
