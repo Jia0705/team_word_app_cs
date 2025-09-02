@@ -100,10 +100,7 @@
             app:cornerRadius="@dimen/s"
             android:text="@string/add_new" />
 
-
     </LinearLayout>
-
-
 
 </FrameLayout>
 
