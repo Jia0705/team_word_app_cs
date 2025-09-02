@@ -5,6 +5,7 @@ import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.data.repo.WordsRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 class HomeViewModel(
     private val repo: WordsRepo = WordsRepo.getInstance()
@@ -18,6 +19,6 @@ class HomeViewModel(
 
     // Show ONLY active words on Home
     fun getWords() {
-//        _words.update { repo.getActiveWords() }
+        _words.update { repo.getActiveWords() }
     }
 }

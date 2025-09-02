@@ -63,8 +63,7 @@ class DetailFragment : Fragment() {
 
         // Update -> Edit
         binding.btnUpdate.setOnClickListener {
-            val action =
-                DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
+            val action = DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
             findNavController().navigate(action)
         }
 
