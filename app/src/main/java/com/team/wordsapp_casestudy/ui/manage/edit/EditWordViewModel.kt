@@ -21,7 +21,6 @@ class EditWordViewModel : BaseManageWordViewModel() {
     override fun sumbit() {
         word?.let {
             repo.updateWord(
-                it.id!!,
                 it.copy(
                     title =title.value,
                     meaning = meaning.value,
