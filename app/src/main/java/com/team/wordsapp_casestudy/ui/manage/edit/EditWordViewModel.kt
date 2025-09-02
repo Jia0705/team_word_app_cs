@@ -6,7 +6,6 @@ import com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordViewModel
 import kotlinx.coroutines.launch
 
 class EditWordViewModel : BaseManageWordViewModel() {
-
     private var word: Word? = null
 
     fun getWord(id: Int) {
@@ -18,7 +17,7 @@ class EditWordViewModel : BaseManageWordViewModel() {
             detail.value = it.details
         }
     }
-    override fun sumbit() {
+    override fun submit() {
         word?.let {
             repo.updateWord(
                 it.copy(

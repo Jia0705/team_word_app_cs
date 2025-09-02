@@ -6,133 +6,135 @@
             type="com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordViewModel" />
     </data>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.manage.base.BaseManageWordFragment">
-
-    <TextView
-        android:id="@+id/tvHeader"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xxxxxl"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/xl"
-        android:text="@string/add_new"
-        android:textStyle="bold"
-        style="@style/TextAppearance.Material3.TitleLarge" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-    <LinearLayout
-        android:id="@+id/bgBase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingStart="@dimen/xl"
-        android:paddingEnd="@dimen/xl">
+        android:background="@color/white"
+        tools:context=".ui.manage.base.BaseManageWordFragment">
 
         <TextView
+            android:id="@+id/tvHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:paddingTop="@dimen/xl"
-            style="@style/TextAppearance.Material3.TitleSmall"/>
-
-        <EditText
-            android:id="@+id/etTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_bg"
-            android:text="@{viewModel.title}"
-            android:hint="@string/title"
-            android:padding="@dimen/m"
-            android:layout_marginTop="@dimen/xs"
+            android:layout_height="@dimen/xxxxxl"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/xl"
+            android:text="@string/add_new"
+            android:textStyle="bold"
             style="@style/TextAppearance.Material3.TitleLarge" />
 
-        <TextView
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/bgBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/xl"
+                android:paddingEnd="@dimen/xl">
+
+                <!-- Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:paddingTop="@dimen/xl"
+                    style="@style/TextAppearance.Material3.TitleSmall"/>
+
+                <EditText
+                    android:id="@+id/etTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/title"
+                    android:padding="@dimen/m"
+                    android:layout_marginTop="@dimen/xs"
+                    android:text='@={viewModel.title}'
+                    style="@style/TextAppearance.Material3.TitleLarge" />
+
+                <!-- Meaning -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/meaning"
+                    android:layout_marginTop="@dimen/xl"
+                    style="@style/TextAppearance.Material3.TitleSmall"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/meaning"
+                    android:padding="@dimen/m"
+                    android:layout_marginTop="@dimen/xs"
+                    android:text='@={viewModel.meaning}'
+                    style="@style/TextAppearance.Material3.TitleLarge" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/synonym"
+                    android:layout_marginTop="@dimen/xl"
+                    style="@style/TextAppearance.Material3.TitleSmall"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/synonym"
+                    android:padding="@dimen/m"
+                    android:layout_marginTop="@dimen/xs"
+                    android:text='@={viewModel.synomyn}'
+                    style="@style/TextAppearance.Material3.TitleLarge" />
+
+                <!-- Details -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details"
+                    android:layout_marginTop="@dimen/xl"
+                    android:layout_marginBottom="@dimen/xxxs"
+                    style="@style/TextAppearance.Material3.TitleSmall"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|start"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/details"
+                    android:padding="@dimen/m"
+                    android:layout_marginTop="@dimen/xs"
+                    android:minLines="4"
+                    android:inputType="textMultiLine"
+                    android:text='@={viewModel.detail}'
+                    style="@style/TextAppearance.Material3.TitleLarge" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/xl" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/meaning"
-            android:layout_marginTop="@dimen/xl"
-            style="@style/TextAppearance.Material3.TitleSmall"/>
+            android:paddingStart="@dimen/xl"
+            android:paddingEnd="@dimen/xl"
+            android:paddingBottom="@dimen/xl">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_bg"
-            android:text="@{viewModel.meaning}"
-            android:hint="@string/meaning"
-            android:padding="@dimen/m"
-            android:layout_marginTop="@dimen/xs"
-            style="@style/TextAppearance.Material3.TitleLarge" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/synonym"
-            android:layout_marginTop="@dimen/xl"
-            style="@style/TextAppearance.Material3.TitleSmall"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_bg"
-            android:text="@{viewModel.synomyn}"
-            android:hint="@string/synonym"
-            android:padding="@dimen/m"
-            android:layout_marginTop="@dimen/xs"
-            style="@style/TextAppearance.Material3.TitleLarge" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/details"
-            android:layout_marginTop="@dimen/xl"
-            android:layout_marginBottom="@dimen/xxxs"
-            style="@style/TextAppearance.Material3.TitleSmall"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minLines="3"
-            android:gravity="top|start"
-            android:background="@drawable/edit_text_bg"
-            android:text="@{viewModel.detail}"
-            android:hint="@string/details"
-            android:padding="@dimen/m"
-            android:layout_marginTop="@dimen/xs"
-            style="@style/TextAppearance.Material3.TitleLarge" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/xl" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/xl"
+                app:cornerRadius="@dimen/s"
+                android:onClick='@{() -> viewModel.submit()}'
+                android:text="@string/add_new" />
+        </LinearLayout>
     </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/xl"
-        android:paddingEnd="@dimen/xl"
-        android:paddingBottom="@dimen/xl">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/mbSubmit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/xl"
-            app:cornerRadius="@dimen/s"
-            android:onClick="@{() -> viewModel.sumbit()}"
-            android:text="@string/add_new" />
-
-    </LinearLayout>
-</LinearLayout>
-
 </layout>
