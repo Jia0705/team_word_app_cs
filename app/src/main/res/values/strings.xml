@@ -1,7 +1,18 @@
 <resources>
-    <string name="app_name">WordsApp_CaseStudy</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">gg</string>
     <string name="title">Title</string>
     <string name="meaning">Meaning</string>
+    <string name="search">Search</string>
+    <string name="sort">Sort</string>
+    <string name="add_new">Add New</string>
+    <string name="empty_words">You have no word yet</string>
+    <string name="word_details">Word Details</string>
+    <string name="done">Done</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="synonym">Synonym</string>
+    <string name="details">Details</string>
+    <string name="unmark">Unmark</string>
+    <string name="no_completed_words_yet">No completed words yet</string>
+
 </resources>
