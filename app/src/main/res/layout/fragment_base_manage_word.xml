@@ -1,13 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordViewModel" />
+    </data>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.manage.base.BaseManageWordFragment">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/s"
+        android:background="@color/white"
+        app:title="Title Here" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/xs">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            style="@style/TextAppearance.Material3.TitleLarge"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_bg"
+            android:text="@{viewModel.title}"
+            android:hint="@string/title"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/meaning"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_bg"
+            android:text="@{viewModel.meaning}"
+            android:hint="@string/meaning"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/synomyn"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_bg"
+            android:text="@{viewModel.synomyn}"
+            android:hint="@string/synomyn"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/detail"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/edit_text_bg"
+            android:text="@{viewModel.detail}"
+            android:hint="@string/detail"
+            android:layout_marginTop="@dimen/xs"
+            style="@style/TextAppearance.Material3.TitleLarge" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/xl"
+            app:cornerRadius="@dimen/s"
+            android:text="@string/button" />
+
+
+    </LinearLayout>
+
+
 
 </FrameLayout>
+
+</layout>
