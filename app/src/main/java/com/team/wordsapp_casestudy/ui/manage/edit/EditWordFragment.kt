@@ -19,7 +19,7 @@ class EditWordFragment : BaseManageWordFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
         viewModel.getWord(args.wordId)
-        binding.tbTitle.setTitle("Update Word")
+        binding.tvHeader.setText(R.string.update)
         binding.mbSubmit.setText(R.string.update)
     }
 }

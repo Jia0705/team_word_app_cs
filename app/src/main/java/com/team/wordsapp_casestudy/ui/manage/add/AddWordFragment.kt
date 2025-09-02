@@ -13,7 +13,7 @@ class AddWordFragment : BaseManageWordFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
-        binding.tbTitle.setTitle("Add Word")
+        binding.tvHeader.setText(getString(R.string.add_new))
         binding.mbSubmit.setText(R.string.add_new)
     }
 }
