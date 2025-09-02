@@ -63,7 +63,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/synomyn"
+            android:text="@string/synonym"
             android:layout_marginTop="@dimen/xs"
             style="@style/TextAppearance.Material3.TitleLarge"/>
 
@@ -72,14 +72,14 @@
             android:layout_height="50dp"
             android:background="@drawable/edit_text_bg"
             android:text="@{viewModel.synomyn}"
-            android:hint="@string/synomyn"
+            android:hint="@string/synonym"
             android:layout_marginTop="@dimen/xs"
             style="@style/TextAppearance.Material3.TitleLarge" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/detail"
+            android:text="@string/details"
             android:layout_marginTop="@dimen/xs"
             style="@style/TextAppearance.Material3.TitleLarge"/>
 
@@ -88,7 +88,7 @@
             android:layout_height="100dp"
             android:background="@drawable/edit_text_bg"
             android:text="@{viewModel.detail}"
-            android:hint="@string/detail"
+            android:hint="@string/details"
             android:layout_marginTop="@dimen/xs"
             style="@style/TextAppearance.Material3.TitleLarge" />
 
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/xl"
             app:cornerRadius="@dimen/s"
-            android:text="@string/button" />
+            android:text="@string/add_new" />
 
 
     </LinearLayout>
