@@ -21,4 +21,5 @@
     <dimen name="tx_xl">18sp</dimen>
     <dimen name="tx_xxl">20sp</dimen>
     <dimen name="tx_xxxl">24sp</dimen>
+    <dimen name="tx_xxxxl">30sp</dimen>
 </resources>

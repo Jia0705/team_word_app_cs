@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/xxl"
     tools:context=".ui.manage.popup.DeletePopFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/are_you_sure"
+        android:textSize="@dimen/tx_xxxxl"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tx_xxxl"
+        android:text="@string/you_want_to_delete_this_word_action_cannot_be_undone"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            app:cornerRadius="@dimen/s"
+            android:textSize="@dimen/tx_xl"
+            android:layout_marginEnd="@dimen/xxxl"
+            app:backgroundTint="@color/blue"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            app:cornerRadius="@dimen/s"
+            android:textSize="@dimen/tx_xl"
+            app:backgroundTint="@color/red"/>
+    </LinearLayout>
+
+</LinearLayout>
