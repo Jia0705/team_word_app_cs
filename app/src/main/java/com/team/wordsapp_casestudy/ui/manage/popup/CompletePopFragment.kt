@@ -36,7 +36,7 @@ class CompletePopFragment : DialogFragment() {
 
         // Change message based on completed or unmark
         tvMessage.text = if (isUnmark) {
-            getString(R.string.do_you_want_to_unmark_this_word_back)
+            getString(R.string.do_you_want_to_unmark_this_word)
         } else {
             getString(R.string.do_you_want_to_move_this_word_to_completed_list)
         }
