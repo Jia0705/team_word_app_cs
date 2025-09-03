@@ -6,7 +6,7 @@ import com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordViewModel
 import kotlinx.coroutines.launch
 
 class AddWordViewModel : BaseManageWordViewModel() {
-    override fun sumbit() {
+    override fun submit() {
         val word = Word(
             title = title.value,
             meaning = meaning.value,

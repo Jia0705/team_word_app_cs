@@ -11,7 +11,6 @@ import kotlin.getValue
 class EditWordFragment : BaseManageWordFragment() {
 
     override val viewModel: EditWordViewModel by viewModels()
-
     private val args: EditWordFragmentArgs by navArgs()
 
 

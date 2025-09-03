@@ -45,6 +45,8 @@ class CompletedFragment : Fragment() {
         }
     }
 
+    // onResume() is called when the fragment comes on screen and is visible to the user again
+    // basically every time the screen shows up again, reload the words from the repo to get the latest
     override fun onResume() {
         super.onResume()
         viewModel.getWords()

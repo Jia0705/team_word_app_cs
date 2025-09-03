@@ -22,5 +22,5 @@ abstract class BaseManageWordViewModel(
 
     val finish = _finish.asSharedFlow()
 
-    abstract fun sumbit()
+    abstract fun submit()
 }
