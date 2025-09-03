@@ -10,7 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.team.wordsapp_casestudy.R
+import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.databinding.FragmentDetailBinding
+import com.team.wordsapp_casestudy.ui.manage.popup.CompletePopFragment
+import com.team.wordsapp_casestudy.ui.manage.popup.DeletePopFragment
 
 class DetailFragment : Fragment() {
 
@@ -48,17 +51,7 @@ class DetailFragment : Fragment() {
 
         // Done or Unmark → update + notify + return to the list we came from
         binding.btnDone.setOnClickListener {
-            val isCompletedNow = viewModel.getWordById(wordId)?.isCompleted == true
-            if (isCompletedNow) {
-                // Unmark -> move to Home (visible on Home)
-                viewModel.markCompleted(wordId, completed = false)
-            } else {
-                // Done -> move to Completed (disappear from Home)
-                viewModel.markCompleted(wordId)
-            }
-            setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
-            // go back to the previous screen
-            findNavController().popBackStack()
+            showConfirmDialog(word)
         }
 
         // Update → Edit
@@ -69,9 +62,49 @@ class DetailFragment : Fragment() {
 
         // Delete → notify + back to previous list
         binding.btnDelete.setOnClickListener {
-            viewModel.deleteWord(wordId)
-            setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
-            findNavController().popBackStack()
+            showDeleteDialog(word)
         }
+    }
+
+    private fun showDeleteDialog(word: Word) {
+        val deleteDialog = DeletePopFragment().apply {
+            setListener(object: DeletePopFragment.Listener {
+                override fun onClickDelete() {
+                    viewModel.deleteWord(word.id!!)
+                    setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
+                    findNavController().popBackStack()
+                }
+
+                override fun onClickCancel() {
+
+                }
+            })
+        }
+        deleteDialog.show(parentFragmentManager, "DeletePopFragment")
+    }
+
+    private fun showConfirmDialog(word: Word) {
+        val confirmDialog = CompletePopFragment().apply {
+            setListener(object : CompletePopFragment.Listener {
+                override fun onClickYes() {
+                    val isCompletedNow = viewModel.getWordById(word.id!!)?.isCompleted == true
+                    if (isCompletedNow) {
+                        // Unmark -> move to Home (visible on Home)
+                        viewModel.markCompleted(word.id, completed = false)
+                    } else {
+                        // Done -> move to Completed (disappear from Home)
+                        viewModel.markCompleted(word.id)
+                    }
+                    setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
+                    // go back to the previous screen
+                    findNavController().popBackStack()
+                }
+
+                override fun onClickNo() {
+
+                }
+            })
+        }
+        confirmDialog.show(parentFragmentManager, "CompletePopFragment")
     }
 }

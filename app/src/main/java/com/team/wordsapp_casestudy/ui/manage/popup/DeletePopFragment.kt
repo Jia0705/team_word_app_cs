@@ -14,7 +14,7 @@ import com.team.wordsapp_casestudy.R
 class DeletePopFragment : DialogFragment() {
 
     interface Listener {
-        fun onClickConfirm()
+        fun onClickCancel()
 
         fun onClickDelete()
     }
@@ -41,7 +41,7 @@ class DeletePopFragment : DialogFragment() {
             .create()
 
         btnCancel.setOnClickListener {
-            listener?.onClickConfirm()
+            listener?.onClickCancel()
             dialog.dismiss()
         }
 
