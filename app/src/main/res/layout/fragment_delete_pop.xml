@@ -21,6 +21,10 @@
         android:textSize="@dimen/tx_xxxl"
         android:text="@string/you_want_to_delete_this_word_action_cannot_be_undone"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/xxxl"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
