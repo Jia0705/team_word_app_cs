@@ -84,6 +84,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun showConfirmDialog(word: Word) {
+
+        // Decide which confirmation message should show (unmark or done)
+        val isUnmark = viewModel.getWordById(word.id!!)?.isCompleted == true
+
         val confirmDialog = CompletePopFragment().apply {
             setListener(object : CompletePopFragment.Listener {
                 override fun onClickYes() {
@@ -100,10 +104,10 @@ class DetailFragment : Fragment() {
                     findNavController().popBackStack()
                 }
 
-                override fun onClickNo() {
-
-                }
-            })
+                override fun onClickNo() {}
+            },
+                isUnmark = isUnmark  // tell the dialog which message to show
+            )
         }
         confirmDialog.show(parentFragmentManager, "CompletePopFragment")
     }

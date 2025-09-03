@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">WordsApp_CaseStudy</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">Title</string>
     <string name="meaning">Meaning</string>
     <string name="search">Search</string>
@@ -20,6 +18,7 @@
     <string name="you_want_to_delete_this_word_action_cannot_be_undone">You want to delete this word? Action cannot be undone.</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_want_to_move_this_word_to_completed_list">Do you want to move this word to completed list?</string>
+    <string name="do_you_want_to_unmark_this_word_back">Do you want to unmark this word?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
