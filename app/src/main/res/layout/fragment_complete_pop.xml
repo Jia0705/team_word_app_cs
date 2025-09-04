@@ -16,6 +16,7 @@
         android:textSize="@dimen/tx_xxxxl"
         android:textStyle="bold"/>
     <TextView
+        android:id="@+id/tvMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/tx_xxxl"
