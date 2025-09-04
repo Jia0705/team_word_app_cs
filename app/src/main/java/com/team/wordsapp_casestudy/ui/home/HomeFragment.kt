@@ -48,6 +48,10 @@ class HomeFragment : Fragment() {
         setFragmentResultListener("manage_word") { _, _ ->
             viewModel.getWords()
         }
+
+        binding.btnSort.setOnClickListener {
+
+        }
     }
 
     fun setupAdapter() {

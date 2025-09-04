@@ -22,5 +22,10 @@
     <string name="do_you_want_to_move_this_word_to_completed_list">Do you want to move this word to completed list?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="sort_order">Sort order</string>
+    <string name="ascending">Ascending</string>
+    <string name="descending">Descending</string>
+    <string name="sort_by">Sort By</string>
+    <string name="date">Date</string>
 
 </resources>
