@@ -73,7 +73,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xxxl"/>
+        android:layout_height="@dimen/xxxxxl"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbDone"

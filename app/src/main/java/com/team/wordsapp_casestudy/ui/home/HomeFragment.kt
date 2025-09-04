@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.databinding.FragmentHomeBinding
 import com.team.wordsapp_casestudy.ui.adapter.WordsAdapter
+import com.team.wordsapp_casestudy.ui.manage.popup.SortPopFragment
 import kotlinx.coroutines.launch
 import kotlin.getValue
 
@@ -50,7 +52,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnSort.setOnClickListener {
-
+            showSortDialog()
         }
     }
 
@@ -61,5 +63,28 @@ class HomeFragment : Fragment() {
         }
         binding.rvWords.layoutManager = LinearLayoutManager(requireContext())
         binding.rvWords.adapter = adapter
+    }
+
+    private fun showSortDialog() {
+        val sortDialog = SortPopFragment().apply {
+            setListener(object: SortPopFragment.Listener {
+                override fun onClickDone() {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onSortBySelected(isTitle: Boolean) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onSortOrderSelected(isAscending: Boolean) {
+                    if (isAscending) {
+                        viewModel.words
+                    } else {
+                        viewModel.words
+                    }
+                }
+            })
+        }
+        sortDialog.show(parentFragmentManager, "SortPopFragment")
     }
 }
