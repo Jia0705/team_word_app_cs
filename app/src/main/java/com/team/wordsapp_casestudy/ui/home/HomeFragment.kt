@@ -5,12 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.databinding.FragmentHomeBinding
 import com.team.wordsapp_casestudy.ui.adapter.WordsAdapter
 import com.team.wordsapp_casestudy.ui.manage.popup.SortPopFragment
@@ -51,6 +51,12 @@ class HomeFragment : Fragment() {
             viewModel.getWords()
         }
 
+        // search
+        binding.etSearch.addTextChangedListener { text ->
+            viewModel.setSearchText(text?.toString().orEmpty())
+        }
+
+        // sort
         binding.btnSort.setOnClickListener {
             showSortDialog()
         }
@@ -68,20 +74,15 @@ class HomeFragment : Fragment() {
     private fun showSortDialog() {
         val sortDialog = SortPopFragment().apply {
             setListener(object: SortPopFragment.Listener {
-                override fun onClickDone() {
-                    TODO("Not yet implemented")
-                }
+                override fun onClickDone() {}
 
                 override fun onSortBySelected(isTitle: Boolean) {
-                    TODO("Not yet implemented")
+                    viewModel.setSortByTitle(isTitle)
                 }
 
                 override fun onSortOrderSelected(isAscending: Boolean) {
-                    if (isAscending) {
-                        viewModel.words
-                    } else {
-                        viewModel.words
-                    }
+                    // Apply A–Z (true) or Z–A (false)
+                    viewModel.setSortAscending(isAscending)
                 }
             })
         }

@@ -2,12 +2,15 @@ package com.team.wordsapp_casestudy.data.repo
 
 import com.team.wordsapp_casestudy.data.model.Word
 
+// Sort by title or date
+enum class SortBy { TITLE, DATE }
+
 class WordsRepo private constructor() {
     private val words: MutableMap<Int, Word> = mutableMapOf()
     private var counter = 0
 
     init {
-//        generateRandomWord(10)
+        // generateRandomWord(10)
     }
 
     private fun nextId(): Int {
@@ -22,10 +25,8 @@ class WordsRepo private constructor() {
         return saved
     }
 
-    fun getWords(): List<Word> = words.values.toList()
-
+    // Basic lists (no search/sort)
     fun getActiveWords(): List<Word> = words.values.filter { !it.isCompleted }
-
     fun getCompletedWords(): List<Word> = words.values.filter { it.isCompleted }
 
     fun getWordById(id: Int): Word? = words[id]
@@ -40,8 +41,8 @@ class WordsRepo private constructor() {
     }
 
     fun markCompleted(id: Int, completed: Boolean = true) {
-        val com = words[id] ?: return
-        words[id] = com.copy(isCompleted = completed)
+        val word = words[id] ?: return
+        words[id] = word.copy(isCompleted = completed)
     }
 
     fun generateRandomWord(n: Int) {
@@ -55,6 +56,60 @@ class WordsRepo private constructor() {
             )
             addWord(random)
         }
+    }
+
+
+    // Search + Sort
+    // Search filter
+    private fun filterSearch(list: List<Word>, searchText: String): List<Word> {
+        if (searchText.isBlank()) return list
+        val text = searchText.lowercase()
+        return list.filter {
+            it.title.lowercase().contains(text) ||
+                    it.meaning.lowercase().contains(text) ||
+                    it.synonyms.lowercase().contains(text) ||
+                    it.details.lowercase().contains(text)
+        }
+    }
+
+    private fun List<Word>.sortedByKey(sortBy: SortBy, ascending: Boolean): List<Word> {
+        return when (sortBy) {
+            // if sortBy TITLE sort alphabetically
+            SortBy.TITLE -> {
+                val sorted = this.sortedBy { it.title.lowercase() }
+                if (ascending) sorted else sorted.reversed()
+            }
+            // if sortBy DATE sort by the word’s id
+            SortBy.DATE -> {
+            // lower id means it was added earlier, so this is like “older first”
+                val sorted = this.sortedBy { it.id ?: 0 }      // Oldest → Newest
+                if (ascending) sorted else sorted.reversed()   // Newest → Oldest
+            }
+        }
+    }
+
+    // Get active words with search + sort
+    fun getActiveWordsFiltered(
+        searchText: String,
+        ascending: Boolean,
+        sortBy: SortBy = SortBy.TITLE
+    ): List<Word> {
+        var result = getActiveWords()
+        result = filterSearch(result, searchText)
+        result = result.sortedByKey(sortBy, ascending)
+        return result
+    }
+
+    // Get completed words with search + sort
+    fun getCompletedWordsFiltered(
+        searchText: String,
+        ascending: Boolean,
+        sortBy: SortBy = SortBy.TITLE
+    ): List<Word> {
+        var result = getCompletedWords()
+        result = filterSearch(result, searchText)
+        result = result.sortedByKey(sortBy, ascending)
+        return result
     }
 
     companion object {

@@ -29,6 +29,7 @@
                 android:hint="@string/search"
                 android:padding="@dimen/xs" />
 
+
             <ImageButton
                 android:id="@+id/btnSort"
                 android:layout_width="@dimen/xxxl"
