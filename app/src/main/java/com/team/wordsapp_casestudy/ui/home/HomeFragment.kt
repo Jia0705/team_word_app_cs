@@ -69,19 +69,15 @@ class HomeFragment : Fragment() {
         val sortDialog = SortPopFragment().apply {
             setListener(object: SortPopFragment.Listener {
                 override fun onClickDone() {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onSortBySelected(isTitle: Boolean) {
-                    TODO("Not yet implemented")
+
                 }
 
                 override fun onSortOrderSelected(isAscending: Boolean) {
-                    if (isAscending) {
-                        viewModel.words
-                    } else {
-                        viewModel.words
-                    }
+
                 }
             })
         }
