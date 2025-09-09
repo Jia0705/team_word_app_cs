@@ -12,7 +12,7 @@ interface WordsDao {
     @Query("SELECT * FROM word")
     fun getAllWords(): Flow<List<Word>>
 
-    @Query("SElECT * FROM word WHERE id = :id")
+    @Query("SELECT * FROM word WHERE id = :id")
     fun getWordById(id: Int): Word?
 
     @Insert
