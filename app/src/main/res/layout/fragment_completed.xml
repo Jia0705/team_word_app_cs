@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.manage.completed.CompletedFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,6 @@
                 android:drawablePadding="@dimen/xs"
                 android:hint="@string/search"
                 android:padding="@dimen/xs" />
-
 
             <ImageButton
                 android:id="@+id/btnSort"
@@ -72,25 +71,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/empty_words"
+                    android:text="@string/no_completed_words_yet"
                     style="@style/TextAppearance.Material3.TitleSmall"/>
+
             </LinearLayout>
+
         </FrameLayout>
 
     </LinearLayout>
-
-    <!--  Add   -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="@dimen/xl"
-        android:layout_marginBottom="@dimen/xxl"
-        android:text="@string/add_new"
-        android:textColor="@color/white"
-        app:icon="@drawable/ic_add"
-        android:backgroundTint="@color/blue"
-        app:iconTint="?attr/colorOnPrimary" />
 
 </FrameLayout>

@@ -2,21 +2,18 @@ package com.team.wordsapp_casestudy.ui.manage.add
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.team.wordsapp_casestudy.R
+import com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordFragment
 
-class AddWordFragment : Fragment() {
+class AddWordFragment : BaseManageWordFragment() {
 
-    private val viewModel: AddWordViewModel by viewModels()
+    override val viewModel: AddWordViewModel by viewModels()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_add_word, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
+        binding.tvHeader.setText(getString(R.string.add_new))
+        binding.mbSubmit.setText(R.string.add_new)
     }
 }
