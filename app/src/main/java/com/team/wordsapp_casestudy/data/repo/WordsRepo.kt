@@ -65,10 +65,7 @@ class WordsRepo private constructor() {
         if (searchText.isBlank()) return list
         val text = searchText.lowercase()
         return list.filter {
-            it.title.lowercase().contains(text) ||
-                    it.meaning.lowercase().contains(text) ||
-                    it.synonyms.lowercase().contains(text) ||
-                    it.details.lowercase().contains(text)
+            it.title.lowercase().contains(text)
         }
     }
 
