@@ -131,6 +131,7 @@
                 android:id="@+id/mbSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:backgroundTint="@color/blue"
                 android:layout_marginTop="@dimen/xl"
                 app:cornerRadius="@dimen/s"
                 android:onClick='@{() -> viewModel.submit()}'

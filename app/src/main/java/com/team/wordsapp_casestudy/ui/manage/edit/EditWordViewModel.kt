@@ -18,19 +18,26 @@ class EditWordViewModel : BaseManageWordViewModel() {
         }
     }
     override fun submit() {
-        word?.let {
-            repo.updateWord(
-                it.copy(
-                    title =title.value,
-                    meaning = meaning.value,
-                    synonyms = synomyn.value,
-                    details = detail.value
+        try {
+            require(title.value.isNotBlank()) {"Title cannot be blank"}
+            word?.let {
+                repo.updateWord(
+                    it.copy(
+                        title = title.value,
+                        meaning = meaning.value,
+                        synonyms = synomyn.value,
+                        details = detail.value
+                    )
                 )
-            )
-        }
+            }
 
-        viewModelScope.launch {
-            _finish.emit(Unit)
+            viewModelScope.launch {
+                _finish.emit(Unit)
+            }
+        }catch (e: Exception) {
+            viewModelScope.launch {
+                _error.emit(e.message.toString())
+            }
         }
     }
 }
