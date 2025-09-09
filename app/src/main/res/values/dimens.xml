@@ -12,6 +12,7 @@
     <dimen name="xxxl">24dp</dimen>
     <dimen name="xxxxl">32dp</dimen>
     <dimen name="xxxxxl">48dp</dimen>
+    <dimen name="xxxxxxl">100dp</dimen>
 
     <dimen name="tx_xxs">8sp</dimen>
     <dimen name="tx_xs">10sp</dimen>
