@@ -55,7 +55,8 @@
                     android:padding="@dimen/m"
                     android:layout_marginTop="@dimen/xs"
                     android:text='@={viewModel.title}'
-                    style="@style/TextAppearance.Material3.TitleLarge" />
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:maxLength="45"/>
 
                 <!-- Meaning -->
                 <TextView
