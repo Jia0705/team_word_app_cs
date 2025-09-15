@@ -26,7 +26,6 @@ class DetailViewModel(
         }
     }
 
-    // Mark done or unmark
     fun markCompleted(id: Int, completed: Boolean = true) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.markCompleted(id, completed)

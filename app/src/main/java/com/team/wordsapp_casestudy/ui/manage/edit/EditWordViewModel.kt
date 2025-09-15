@@ -47,6 +47,7 @@ class EditWordViewModel(repo: WordsRepo) : BaseManageWordViewModel(repo) {
             }
         }
     }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

@@ -5,7 +5,6 @@ import com.team.wordsapp_casestudy.data.model.Word
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-// Sort by title or date (DATE = by id order)
 enum class SortBy { TITLE, DATE }
 
 class WordsRepo(
@@ -35,7 +34,6 @@ class WordsRepo(
         dao.update(word.copy(isCompleted = completed))
     }
 
-    // Search + Sort
     private fun filterSearch(list: List<Word>, searchText: String): List<Word> {
         if (searchText.isBlank()) return list
         val text = searchText.lowercase()

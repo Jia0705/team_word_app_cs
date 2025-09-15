@@ -17,18 +17,16 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val repo: WordsRepo
 ) : ViewModel() {
-
     private val _words = MutableStateFlow<List<Word>>(emptyList())
     val words: StateFlow<List<Word>> = _words
     private var searchText: String = ""
-    private var isAscending: Boolean = true  // true = A–Z, false = Z–A
+    private var isAscending: Boolean = true
     private var sortBy: SortBy = SortBy.TITLE
 
     init {
-        getWords() // basically is refresh
+        getWords()
     }
 
-    // search
     fun setSearchText(text: String) {
         searchText = text
         getWords()
@@ -38,13 +36,12 @@ class HomeViewModel(
         isAscending = value
         getWords()
     }
-    // sort title
+
     fun setSortByTitle(isTitle: Boolean) {
         sortBy = if (isTitle) SortBy.TITLE else SortBy.DATE
         getWords()
     }
 
-    // Show ONLY active words
     private fun getWords() {
         viewModelScope.launch {
             repo.getActiveWordsFiltered(searchText, isAscending, sortBy).collect { list ->

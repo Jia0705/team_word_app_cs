@@ -17,9 +17,9 @@ class SortPopFragment : DialogFragment() {
         fun onSortBySelected(isTitle: Boolean)
     }
 
-    private var listener: SortPopFragment.Listener? = null
+    private var listener: Listener? = null
 
-    fun setListener(listener: SortPopFragment.Listener) {
+    fun setListener(listener: Listener) {
         this.listener = listener
     }
 

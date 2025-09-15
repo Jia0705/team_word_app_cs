@@ -18,7 +18,6 @@ import com.team.wordsapp_casestudy.ui.manage.popup.DeletePopFragment
 import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
-
     private val viewModel: DetailViewModel by viewModels {
         DetailViewModel.Factory
     }
@@ -50,23 +49,18 @@ class DetailFragment : Fragment() {
                 binding.tvSynonym.text = word.synonyms
                 binding.tvDetails.text = word.details
 
-                // Done / Unmark
                 binding.btnDone.text =
                     if (word.isCompleted) getString(R.string.unmark) else getString(R.string.done)
 
-                // Done or Unmark
                 binding.btnDone.setOnClickListener {
                     showConfirmDialog(word)
                 }
 
-                // Update → Edit
                 binding.btnUpdate.setOnClickListener {
-                    val action =
-                        DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
+                    val action = DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
                     findNavController().navigate(action)
                 }
 
-                // Delete → notify + back
                 binding.btnDelete.setOnClickListener {
                     showDeleteDialog(wordId)
                 }
@@ -82,7 +76,6 @@ class DetailFragment : Fragment() {
                     setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
                     findNavController().popBackStack()
                 }
-
                 override fun onClickCancel() {
 
                 }
@@ -92,7 +85,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun showConfirmDialog(word: Word) {
-        // Decide which message to show (Unmark vs Done)
         val isUnmark = word.isCompleted
 
         val confirmDialog = CompletePopFragment().apply {
@@ -100,17 +92,16 @@ class DetailFragment : Fragment() {
                 object : CompletePopFragment.Listener {
                     override fun onClickYes() {
                         if (word.isCompleted) {
-                            // Unmark -> move back to Home list
                             viewModel.markCompleted(word.id, completed = false)
                         } else {
-                            // Mark as Done -> move to Completed list
                             viewModel.markCompleted(word.id, completed = true)
                         }
                         setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
                         findNavController().popBackStack()
                     }
+                    override fun onClickNo() {
 
-                    override fun onClickNo() {}
+                    }
                 },
                 isUnmark = isUnmark
             )

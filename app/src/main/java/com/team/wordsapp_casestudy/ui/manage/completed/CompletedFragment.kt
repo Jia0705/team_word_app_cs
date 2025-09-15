@@ -46,12 +46,10 @@ class CompletedFragment : Fragment() {
             parentFragmentManager.clearFragmentResult("manage_word")
         }
 
-        // search
         binding.etSearch.addTextChangedListener { text ->
             viewModel.setSearchText(text?.toString().orEmpty())
         }
 
-        // sort
         binding.btnSort.setOnClickListener {
             showSortDialog()
         }

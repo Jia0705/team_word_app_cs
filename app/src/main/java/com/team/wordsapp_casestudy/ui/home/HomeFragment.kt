@@ -42,7 +42,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Add
         binding.fabAdd.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddWordFragment()
             findNavController().navigate(action)
@@ -52,12 +51,10 @@ class HomeFragment : Fragment() {
             parentFragmentManager.clearFragmentResult("manage_word")
         }
 
-        // search
         binding.etSearch.addTextChangedListener { text ->
             viewModel.setSearchText(text?.toString().orEmpty())
         }
 
-        // sort
         binding.btnSort.setOnClickListener {
             showSortDialog()
         }
@@ -82,7 +79,6 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onSortOrderSelected(isAscending: Boolean) {
-                    // Apply A–Z (true) or Z–A (false)
                     viewModel.setSortAscending(isAscending)
                 }
             })

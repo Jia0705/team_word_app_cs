@@ -27,6 +27,7 @@ class CompletedViewModel(
     init {
         getWords()
     }
+
     fun setSearchText(text: String) {
         searchText = text
         getWords()
