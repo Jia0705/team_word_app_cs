@@ -8,7 +8,9 @@ import com.team.wordsapp_casestudy.ui.manage.base.BaseManageWordFragment
 
 class AddWordFragment : BaseManageWordFragment() {
 
-    override val viewModel: AddWordViewModel by viewModels()
+    override val viewModel: AddWordViewModel by viewModels{
+        AddWordViewModel.Factory
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -14,9 +14,9 @@ navigationSafeArgsGradlePlugin = "2.9.3"
 legacySupportV4 = "1.0.0"
 lifecycleLivedataKtx = "2.9.2"
 lifecycleViewmodelKtx = "2.9.2"
-roomCompiler = "2.6.1"
-roomKtx = "2.6.1"
-roomRuntime = "2.6.1"
+roomCompiler = "2.7.2"
+roomKtx = "2.7.2"
+roomRuntime = "2.7.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

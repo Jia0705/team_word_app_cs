@@ -1,14 +1,21 @@
 package com.team.wordsapp_casestudy.ui.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.team.wordsapp_casestudy.MyApp
 import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.data.repo.SortBy
 import com.team.wordsapp_casestudy.data.repo.WordsRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repo: WordsRepo = WordsRepo.getInstance()
+    private val repo: WordsRepo
 ) : ViewModel() {
 
     private val _words = MutableStateFlow<List<Word>>(emptyList())
@@ -38,9 +45,20 @@ class HomeViewModel(
     }
 
     // Show ONLY active words
-    fun getWords() {
-        _words.value = repo.getActiveWordsFiltered(searchText, isAscending, sortBy)
-        //  "no filtering" use:
-        // _words.value = repo.getActiveWords()
+    private fun getWords() {
+        viewModelScope.launch {
+            repo.getActiveWordsFiltered(searchText, isAscending, sortBy).collect { list ->
+                _words.value = list
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val myRepository = (this[APPLICATION_KEY] as MyApp).repo
+                HomeViewModel(repo = myRepository)
+            }
+        }
     }
 }

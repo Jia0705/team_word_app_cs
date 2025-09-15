@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Word (
     @PrimaryKey(true)
-    val id: Int? = null,
+    val id: Int = 0,
     val title: String,
     val meaning: String,
     val synonyms: String,

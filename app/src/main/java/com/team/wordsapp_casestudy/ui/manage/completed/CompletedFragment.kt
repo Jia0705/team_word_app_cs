@@ -18,7 +18,9 @@ import kotlinx.coroutines.launch
 
 class CompletedFragment : Fragment() {
     private lateinit var binding: FragmentCompletedBinding
-    private val viewModel: CompletedViewModel by viewModels()
+    private val viewModel: CompletedViewModel by viewModels{
+        CompletedViewModel.Factory
+    }
     private lateinit var adapter: WordsAdapter
 
     override fun onCreateView(
@@ -31,25 +33,17 @@ class CompletedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = WordsAdapter(emptyList()) { word ->
-            val action =
-                CompletedFragmentDirections.actionCompletedFragmentToDetailFragment(word.id!!)
-            findNavController().navigate(action)
-        }
-
-        binding.rvWords.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvWords.adapter = adapter
+        setupAdapter()
 
         lifecycleScope.launch {
-            viewModel.words.collect { list ->
-                adapter.setWords(list)
-                binding.llEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            viewModel.words.collect {
+                adapter.setWords(it)
+                binding.llEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             }
         }
 
         setFragmentResultListener("manage_word") { _, _ ->
-            viewModel.getWords()
+            parentFragmentManager.clearFragmentResult("manage_word")
         }
 
         // search
@@ -58,9 +52,19 @@ class CompletedFragment : Fragment() {
         }
 
         // sort
-        binding.btnSort.setOnClickListener { showSortDialog() }
+        binding.btnSort.setOnClickListener {
+            showSortDialog()
+        }
     }
 
+    fun setupAdapter() {
+        adapter = WordsAdapter(emptyList()) {
+            val action = CompletedFragmentDirections.actionCompletedFragmentToDetailFragment(it.id)
+            findNavController().navigate(action)
+        }
+        binding.rvWords.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvWords.adapter = adapter
+    }
     private fun showSortDialog() {
         val sortDialog = SortPopFragment().apply {
             setListener(object : SortPopFragment.Listener {
@@ -76,12 +80,5 @@ class CompletedFragment : Fragment() {
             })
         }
         sortDialog.show(parentFragmentManager, "SortPopFragment")
-    }
-
-    // onResume() is called when the fragment comes on screen and is visible to the user again
-    // basically every time the screen shows up again, reload the words from the repo to get the latest
-    override fun onResume() {
-        super.onResume()
-        viewModel.getWords()
     }
 }

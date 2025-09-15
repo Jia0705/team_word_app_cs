@@ -1,121 +1,83 @@
 package com.team.wordsapp_casestudy.data.repo
 
+import com.team.wordsapp_casestudy.data.db.WordsDao
 import com.team.wordsapp_casestudy.data.model.Word
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
-// Sort by title or date
+// Sort by title or date (DATE = by id order)
 enum class SortBy { TITLE, DATE }
 
-class WordsRepo private constructor() {
-    private val words: MutableMap<Int, Word> = mutableMapOf()
-    private var counter = 0
-
-    init {
-        // generateRandomWord(10)
+class WordsRepo(
+    private val dao: WordsDao
+) {
+    fun getAllWords(): Flow<List<Word>> {
+        return dao.getAllWords()
+    }
+    suspend fun getWordById(id: Int): Word? {
+        return dao.getWordById(id)
     }
 
-    private fun nextId(): Int {
-        counter += 1
-        return counter
+    suspend fun addWord(word: Word) {
+        dao.addWord(word)
     }
 
-    fun addWord(word: Word): Word {
-        val id = nextId()
-        val saved = word.copy(id = id)
-        words[id] = saved
-        return saved
+    suspend fun updateWord(word: Word) {
+        dao.update(word)
     }
 
-    // Basic lists (no search/sort)
-    fun getActiveWords(): List<Word> = words.values.filter { !it.isCompleted }
-    fun getCompletedWords(): List<Word> = words.values.filter { it.isCompleted }
-
-    fun getWordById(id: Int): Word? = words[id]
-
-    fun updateWord(word: Word) {
-        val id = word.id ?: return
-        words[id] = word
+    suspend fun deleteWord(id: Int) {
+        dao.delete(id)
     }
 
-    fun deleteWord(id: Int) {
-        words.remove(id)
+    suspend fun markCompleted(id: Int, completed: Boolean) {
+        val word = dao.getWordById(id) ?: return
+        dao.update(word.copy(isCompleted = completed))
     }
-
-    fun markCompleted(id: Int, completed: Boolean = true) {
-        val word = words[id] ?: return
-        words[id] = word.copy(isCompleted = completed)
-    }
-
-    fun generateRandomWord(n: Int) {
-        repeat(n) { i ->
-            val random = Word(
-                title = "Title $i",
-                meaning = "Meaning $i",
-                synonyms = "Synonyms $i",
-                details = "Detail $i",
-                isCompleted = false
-            )
-            addWord(random)
-        }
-    }
-
 
     // Search + Sort
-    // Search filter
     private fun filterSearch(list: List<Word>, searchText: String): List<Word> {
         if (searchText.isBlank()) return list
         val text = searchText.lowercase()
-        return list.filter {
-            it.title.lowercase().contains(text)
-        }
+        return list.filter { it.title.lowercase().contains(text) }
     }
 
-    private fun List<Word>.sortedByKey(sortBy: SortBy, ascending: Boolean): List<Word> {
-        return when (sortBy) {
-            // if sortBy TITLE sort alphabetically
+    private fun List<Word>.sortedByKey(sortBy: SortBy, ascending: Boolean): List<Word> =
+        when (sortBy) {
             SortBy.TITLE -> {
                 val sorted = this.sortedBy { it.title.lowercase() }
                 if (ascending) sorted else sorted.reversed()
             }
-            // if sortBy DATE sort by the word’s id
             SortBy.DATE -> {
-            // lower id means it was added earlier, so this is like “older first”
-                val sorted = this.sortedBy { it.id ?: 0 }      // Oldest → Newest
-                if (ascending) sorted else sorted.reversed()   // Newest → Oldest
+                val sorted = this.sortedBy { it.id }
+                if (ascending) sorted else sorted.reversed()
             }
         }
-    }
 
-    // Get active words with search + sort
     fun getActiveWordsFiltered(
         searchText: String,
         ascending: Boolean,
         sortBy: SortBy = SortBy.TITLE
-    ): List<Word> {
-        var result = getActiveWords()
-        result = filterSearch(result, searchText)
-        result = result.sortedByKey(sortBy, ascending)
-        return result
+    ): Flow<List<Word>> {
+        return dao.getAllWords().map { list ->
+            var result = list.filter { !it.isCompleted }
+            result = filterSearch(result, searchText)
+            result = result.sortedByKey(sortBy, ascending)
+            result
+        }
     }
 
-    // Get completed words with search + sort
     fun getCompletedWordsFiltered(
         searchText: String,
         ascending: Boolean,
         sortBy: SortBy = SortBy.TITLE
-    ): List<Word> {
-        var result = getCompletedWords()
-        result = filterSearch(result, searchText)
-        result = result.sortedByKey(sortBy, ascending)
-        return result
-    }
-
-    companion object {
-        private var instance: WordsRepo? = null
-        fun getInstance(): WordsRepo {
-            if (instance == null) {
-                instance = WordsRepo()
-            }
-            return instance!!
+    ): Flow<List<Word>> {
+        return dao.getAllWords().map { list ->
+            var result = list.filter { it.isCompleted }
+            result = filterSearch(result, searchText)
+            result = result.sortedByKey(sortBy, ascending)
+            result
         }
     }
 }
+

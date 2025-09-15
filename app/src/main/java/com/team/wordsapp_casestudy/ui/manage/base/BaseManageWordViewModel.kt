@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 abstract class BaseManageWordViewModel(
-    protected val repo: WordsRepo = WordsRepo.getInstance()
+    protected val repo: WordsRepo
 ) : ViewModel() {
 
     val title = MutableStateFlow("")

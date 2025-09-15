@@ -15,11 +15,12 @@ import com.team.wordsapp_casestudy.databinding.FragmentHomeBinding
 import com.team.wordsapp_casestudy.ui.adapter.WordsAdapter
 import com.team.wordsapp_casestudy.ui.manage.popup.SortPopFragment
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels{
+        HomeViewModel.Factory
+    }
     private lateinit var adapter: WordsAdapter
 
     override fun onCreateView(
@@ -48,7 +49,7 @@ class HomeFragment : Fragment() {
         }
 
         setFragmentResultListener("manage_word") { _, _ ->
-            viewModel.getWords()
+            parentFragmentManager.clearFragmentResult("manage_word")
         }
 
         // search
@@ -64,7 +65,7 @@ class HomeFragment : Fragment() {
 
     fun setupAdapter() {
         adapter = WordsAdapter(emptyList()) {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id!!)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id)
             findNavController().navigate(action)
         }
         binding.rvWords.layoutManager = LinearLayoutManager(requireContext())

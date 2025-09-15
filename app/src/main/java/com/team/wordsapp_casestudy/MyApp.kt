@@ -17,7 +17,9 @@ class MyApp: Application() {
             this,
             MyDatabase::class.java,
             MyDatabase.NAME
-        ).build()
-//        repo = WordsRepo(db.getWordsDao())
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+        repo = WordsRepo(db.getWordsDao())
     }
 }
