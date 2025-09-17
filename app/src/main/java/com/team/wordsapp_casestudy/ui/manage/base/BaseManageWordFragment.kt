@@ -33,19 +33,10 @@ abstract class BaseManageWordFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.finish.collect {
-                // refresh
                 setFragmentResult("manage_word", Bundle())
 
-                // get the navigation controller so we can move between screens
                 val nav = findNavController()
-
-                // try to jump back past the detail screen
-                // if the stack is: Home → Detail → Edit, this will remove both Detail and Edit, leaving user at Home
-                // switch is true if it worked, false if there was no Detail in the stack
                 val switch = nav.popBackStack(R.id.detailFragment, true)
-
-                // If there was no Detail screen (for example, you came from Add instead of Edit),
-                // then just go back one step which is home
                 if (!switch) {
                     nav.popBackStack()
                 }

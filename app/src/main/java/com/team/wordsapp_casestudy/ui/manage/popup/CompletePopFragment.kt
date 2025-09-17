@@ -16,7 +16,7 @@ class CompletePopFragment : DialogFragment() {
     }
 
     private var listener: Listener? = null
-    private var isUnmark: Boolean = false  // to change confirmation message in different screen
+    private var isUnmark: Boolean = false
 
     fun setListener(listener: Listener, isUnmark: Boolean = false) {
         this.listener = listener
@@ -34,7 +34,6 @@ class CompletePopFragment : DialogFragment() {
         val btnNo = view.findViewById<MaterialButton>(R.id.mbNo)
         val tvMessage = view.findViewById<TextView>(R.id.tvMessage)
 
-        // Change message based on completed or unmark
         tvMessage.text = if (isUnmark) {
             getString(R.string.do_you_want_to_unmark_this_word)
         } else {

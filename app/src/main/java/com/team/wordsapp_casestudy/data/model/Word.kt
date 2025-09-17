@@ -1,7 +1,12 @@
 package com.team.wordsapp_casestudy.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Word (
-    val id: Int? = null,
+    @PrimaryKey(true)
+    val id: Int = 0,
     val title: String,
     val meaning: String,
     val synonyms: String,
