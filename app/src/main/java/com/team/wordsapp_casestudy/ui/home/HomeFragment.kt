@@ -15,11 +15,12 @@ import com.team.wordsapp_casestudy.databinding.FragmentHomeBinding
 import com.team.wordsapp_casestudy.ui.adapter.WordsAdapter
 import com.team.wordsapp_casestudy.ui.manage.popup.SortPopFragment
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels{
+        HomeViewModel.Factory
+    }
     private lateinit var adapter: WordsAdapter
 
     override fun onCreateView(
@@ -41,22 +42,19 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // Add
         binding.fabAdd.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddWordFragment()
             findNavController().navigate(action)
         }
 
         setFragmentResultListener("manage_word") { _, _ ->
-            viewModel.getWords()
+            parentFragmentManager.clearFragmentResult("manage_word")
         }
 
-        // search
         binding.etSearch.addTextChangedListener { text ->
             viewModel.setSearchText(text?.toString().orEmpty())
         }
 
-        // sort
         binding.btnSort.setOnClickListener {
             showSortDialog()
         }
@@ -64,7 +62,7 @@ class HomeFragment : Fragment() {
 
     fun setupAdapter() {
         adapter = WordsAdapter(emptyList()) {
-            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id!!)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id)
             findNavController().navigate(action)
         }
         binding.rvWords.layoutManager = LinearLayoutManager(requireContext())
@@ -81,7 +79,6 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onSortOrderSelected(isAscending: Boolean) {
-                    // Apply A–Z (true) or Z–A (false)
                     viewModel.setSortAscending(isAscending)
                 }
             })

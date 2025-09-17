@@ -1,14 +1,21 @@
 package com.team.wordsapp_casestudy.ui.manage.completed
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.team.wordsapp_casestudy.MyApp
 import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.data.repo.SortBy
 import com.team.wordsapp_casestudy.data.repo.WordsRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class CompletedViewModel(
-    private val repo: WordsRepo = WordsRepo.getInstance()
+    private val repo: WordsRepo
 ) : ViewModel() {
 
     private val _words = MutableStateFlow<List<Word>>(emptyList())
@@ -16,6 +23,10 @@ class CompletedViewModel(
     private var searchText: String = ""
     private var isAscending: Boolean = true
     private var sortBy: SortBy = SortBy.TITLE
+
+    init {
+        getWords()
+    }
 
     fun setSearchText(text: String) {
         searchText = text
@@ -32,7 +43,20 @@ class CompletedViewModel(
         getWords()
     }
 
-    fun getWords() {
-        _words.value = repo.getCompletedWordsFiltered(searchText, isAscending, sortBy)
+    private fun getWords() {
+        viewModelScope.launch {
+            repo.getCompletedWordsFiltered(searchText, isAscending, sortBy).collect { list ->
+                _words.value = list
+            }
+        }
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val myRepository = (this[APPLICATION_KEY] as MyApp).repo
+                CompletedViewModel(repo = myRepository)
+            }
+        }
     }
 }

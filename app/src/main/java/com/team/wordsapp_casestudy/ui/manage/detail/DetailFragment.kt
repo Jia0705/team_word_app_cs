@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.team.wordsapp_casestudy.R
@@ -14,10 +15,12 @@ import com.team.wordsapp_casestudy.data.model.Word
 import com.team.wordsapp_casestudy.databinding.FragmentDetailBinding
 import com.team.wordsapp_casestudy.ui.manage.popup.CompletePopFragment
 import com.team.wordsapp_casestudy.ui.manage.popup.DeletePopFragment
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
-
-    private val viewModel: DetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels {
+        DetailViewModel.Factory
+    }
     private val args: DetailFragmentArgs by navArgs()
     private lateinit var binding: FragmentDetailBinding
 
@@ -33,48 +36,46 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val wordId = args.wordId
-        val word = viewModel.getWordById(wordId)
-        if (word == null) {
-            // Word not found → just go back
-            findNavController().popBackStack()
-            return
-        }
+        viewModel.getWordById(wordId)
 
-        binding.tvTitle.text = word.title
-        binding.tvMeaning.text = word.meaning
-        binding.tvSynonym.text = word.synonyms
-        binding.tvDetails.text = word.details
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.word.collect { word ->
+                if (word == null) {
+                    return@collect
+                }
 
-        // Done / Unmark
-        binding.btnDone.text =
-            if (word.isCompleted) getString(R.string.unmark) else getString(R.string.done)
+                binding.tvTitle.text = word.title
+                binding.tvMeaning.text = word.meaning
+                binding.tvSynonym.text = word.synonyms
+                binding.tvDetails.text = word.details
 
-        // Done or Unmark → update + notify + return to the list we came from
-        binding.btnDone.setOnClickListener {
-            showConfirmDialog(word)
-        }
+                binding.btnDone.text =
+                    if (word.isCompleted) getString(R.string.unmark) else getString(R.string.done)
 
-        // Update → Edit
-        binding.btnUpdate.setOnClickListener {
-            val action = DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
-            findNavController().navigate(action)
-        }
+                binding.btnDone.setOnClickListener {
+                    showConfirmDialog(word)
+                }
 
-        // Delete → notify + back to previous list
-        binding.btnDelete.setOnClickListener {
-            showDeleteDialog(word)
+                binding.btnUpdate.setOnClickListener {
+                    val action = DetailFragmentDirections.actionDetailFragmentToEditWordFragment(wordId)
+                    findNavController().navigate(action)
+                }
+
+                binding.btnDelete.setOnClickListener {
+                    showDeleteDialog(wordId)
+                }
+            }
         }
     }
 
-    private fun showDeleteDialog(word: Word) {
+    private fun showDeleteDialog(wordId: Int) {
         val deleteDialog = DeletePopFragment().apply {
-            setListener(object: DeletePopFragment.Listener {
+            setListener(object : DeletePopFragment.Listener {
                 override fun onClickDelete() {
-                    viewModel.deleteWord(word.id!!)
+                    viewModel.deleteWord(wordId)
                     setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
                     findNavController().popBackStack()
                 }
-
                 override fun onClickCancel() {
 
                 }
@@ -84,29 +85,25 @@ class DetailFragment : Fragment() {
     }
 
     private fun showConfirmDialog(word: Word) {
-
-        // Decide which confirmation message should show (unmark or done)
-        val isUnmark = viewModel.getWordById(word.id!!)?.isCompleted == true
+        val isUnmark = word.isCompleted
 
         val confirmDialog = CompletePopFragment().apply {
-            setListener(object : CompletePopFragment.Listener {
-                override fun onClickYes() {
-                    val isCompletedNow = viewModel.getWordById(word.id!!)?.isCompleted == true
-                    if (isCompletedNow) {
-                        // Unmark -> move to Home (visible on Home)
-                        viewModel.markCompleted(word.id, completed = false)
-                    } else {
-                        // Done -> move to Completed (disappear from Home)
-                        viewModel.markCompleted(word.id)
+            setListener(
+                object : CompletePopFragment.Listener {
+                    override fun onClickYes() {
+                        if (word.isCompleted) {
+                            viewModel.markCompleted(word.id, completed = false)
+                        } else {
+                            viewModel.markCompleted(word.id, completed = true)
+                        }
+                        setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
+                        findNavController().popBackStack()
                     }
-                    setFragmentResult("manage_word", Bundle().apply { putBoolean("refresh", true) })
-                    // go back to the previous screen
-                    findNavController().popBackStack()
-                }
+                    override fun onClickNo() {
 
-                override fun onClickNo() {}
-            },
-                isUnmark = isUnmark  // tell the dialog which message to show
+                    }
+                },
+                isUnmark = isUnmark
             )
         }
         confirmDialog.show(parentFragmentManager, "CompletePopFragment")
